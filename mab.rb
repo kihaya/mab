@@ -1,5 +1,7 @@
 #!/usr/local/env ruby
 
+require "rubystats"
+
 module Mab
   class Arm
     attr_reader :prob
@@ -13,8 +15,10 @@ module Mab
     class Result
     end
     
-    def pull_arm(choise)
-      1
+    def pull_arm(arms, choise)
+      p = arms[choise].prob
+      dist = Rubystats::BinomialDistribution.new(1, p)
+      dist.rng
     end
     
     def init_reward
@@ -27,7 +31,7 @@ module Mab
       @t.times do
         strategy = @strategy.new(@arms, @rewards, 0.1)
         choise = strategy.choose
-        r = pull_arm choise
+        r = pull_arm(@arms, choise)
         @rewards[choise] = @rewards[choise] + r
       end
     end

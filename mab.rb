@@ -51,18 +51,28 @@ module Mab
 
     class EpsilonGreedy < Base
       def choose
-        0
+        epsilon_greedy_choose
       end
       
       private
             
       def epsilon_greedy_choose
+        dist = Rubystats::BinomialDistribution.new(1, @epsilon)
+        if dist.rng
+          epsilon_choose
+        else
+          greedy_choose
+        end
       end
       
       def greedy_choose
+        # Choose arm that has max rewards value in history
+        # same as argmax rewards
+        @rewards.invert.max.last
       end
       
       def epsilon_choose
+        (0...@arms.length).to_a.sample
       end
     end
   end

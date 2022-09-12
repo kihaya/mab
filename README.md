@@ -1,4 +1,4 @@
-### mab 
+## mab
 
 Multi-armed bandit algorithm just in one ruby file.
 This program is experimental poc and for toy use.

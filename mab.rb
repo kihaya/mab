@@ -1,6 +1,12 @@
 #!/usr/local/env ruby
 
-require "rubystats"
+require 'bundler/inline'
+
+gemfile do
+  source 'https://rubygems.org'
+  gem 'matrix'
+  gem 'rubystats'
+end
 
 module Mab
   class Arm
@@ -34,6 +40,19 @@ module Mab
     end
   end
   
+  class Bandit
+    include Mab::Base
+
+    attr_reader :arms, :rewards, :strategy, :t
+
+    def initialize(arms, rewards, strategy, t)
+      @arms = arms
+      @rewards = rewards
+      @strategy = strategy
+      @t = t
+    end
+  end
+
   module Strategy
     class Base
       attr_reader :arms, :rewards, :epsilon
@@ -79,22 +98,12 @@ module Mab
 end
 
 if __FILE__ == $0
-  class A
-    include Mab::Base
-    
-    attr_reader :arms, :rewards, :strategy, :t
-    
-    def initialize(arms, rewards, strategy, t)
-      @arms = arms
-      @rewards = rewards
-      @strategy = strategy
-      @t = t
-    end
-  end
-  
-  arms = [Mab::Arm.new(0.2), Mab::Arm.new(0.5)]
+  arms = [Mab::Arm.new(0.2),
+          Mab::Arm.new(0.5),
+          Mab::Arm.new(0.6)]
+
   strategy = Mab::Strategy::EpsilonGreedy
-  my_mab = A.new(arms, {}, strategy, t=1000)
+  my_mab = Mab::Bandit.new(arms, {}, strategy, t=2000)
   
   my_mab.init_reward
   my_mab.run

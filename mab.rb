@@ -12,9 +12,6 @@ module Mab
   end
   
   module Base
-    class Result
-    end
-    
     def pull_arm(arms, choise)
       p = arms[choise].prob
       dist = Rubystats::BinomialDistribution.new(1, p)

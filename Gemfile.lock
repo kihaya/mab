@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rubystats (0.3.0)
+
+PLATFORMS
+  x86_64-darwin-21
+
+DEPENDENCIES
+  rubystats
+
+BUNDLED WITH
+   2.3.7

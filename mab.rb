@@ -98,12 +98,12 @@ module Mab
 end
 
 if __FILE__ == $0
-  arms = [Mab::Arm.new(0.2),
-          Mab::Arm.new(0.5),
-          Mab::Arm.new(0.6)]
-
-  strategy = Mab::Strategy::EpsilonGreedy
-  my_mab = Mab::Bandit.new(arms, {}, strategy, t=2000)
+  my_mab = Mab::Bandit.new([Mab::Arm.new(0.2),
+                            Mab::Arm.new(0.5),
+                            Mab::Arm.new(0.6)],
+                           {},
+                           strategy,
+                           t=2000)
   
   my_mab.init_reward
   my_mab.run
